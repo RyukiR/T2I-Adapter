@@ -26,7 +26,7 @@ def main():
     opt = parser.parse_args()
     which_cond = opt.which_cond
     if opt.outdir is None:
-        opt.outdir = f'outputs/test-{which_cond}'
+        opt.outdir = f'outputs/test-{which_cond}' # change dir here!
     os.makedirs(opt.outdir, exist_ok=True)
     if opt.resize_short_edge is None:
         print(f"you don't specify the resize_shot_edge, so the maximum resolution is set to {opt.max_resolution}")
