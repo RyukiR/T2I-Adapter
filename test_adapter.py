@@ -53,7 +53,7 @@ def main():
     adapter = get_adapters(opt, getattr(ExtraCondition, which_cond))
     cond_model = None
     if opt.cond_inp_type == 'image':
-        cond_model = get_cond_model(opt, getattr(ExtraCondition, which_cond))
+        cond_model = get_cond_model(opt, getattr(ExtraCondition, which_cond)) # check!!!
 
     process_cond_module = getattr(api, f'get_cond_{which_cond}')
 
