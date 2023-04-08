@@ -26,7 +26,7 @@ def main():
     opt = parser.parse_args()
     which_cond = opt.which_cond
     if opt.outdir is None:
-        opt.outdir = f'outputs/test-{which_cond}' # change dir here!
+        opt.outdir = f'outputs/test-{which_cond}' # 条件图片输出路径
     os.makedirs(opt.outdir, exist_ok=True)
     if opt.resize_short_edge is None:
         print(f"you don't specify the resize_shot_edge, so the maximum resolution is set to {opt.max_resolution}")
@@ -53,7 +53,7 @@ def main():
     adapter = get_adapters(opt, getattr(ExtraCondition, which_cond))
     cond_model = None
     if opt.cond_inp_type == 'image':
-        cond_model = get_cond_model(opt, getattr(ExtraCondition, which_cond)) # check!!!
+        cond_model = get_cond_model(opt, getattr(ExtraCondition, which_cond)) # 加载预处理模型
 
     process_cond_module = getattr(api, f'get_cond_{which_cond}')
 
@@ -65,10 +65,10 @@ def main():
             seed_everything(opt.seed)
             for v_idx in range(opt.n_samples):
                 # seed_everything(opt.seed+v_idx+test_idx)
-                cond = process_cond_module(opt, cond_path, opt.cond_inp_type, cond_model)
+                cond = process_cond_module(opt, cond_path, opt.cond_inp_type, cond_model) # 进行预处理，得到处理后的条件图片
 
                 base_count = len(os.listdir(opt.outdir)) // 2
-                cv2.imwrite(os.path.join(opt.outdir, f'{base_count:05}_{which_cond}.png'), tensor2img(cond))
+                cv2.imwrite(os.path.join(opt.outdir, f'{base_count:05}_{which_cond}.png'), tensor2img(cond)) # 存储条件图片
 
                 adapter_features, append_to_context = get_adapter_feature(cond, adapter)
                 opt.prompt = prompt
